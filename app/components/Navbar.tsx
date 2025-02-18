@@ -1,21 +1,24 @@
 import React from "react";
 import Link from "next/link";
 import Image from "next/image";
+import { auth } from "@/auth";
+import NavbarActions from "./NavbarActions";
 
-const Navbar = () => {
+const Navbar = async () => {
+  const session = await auth();
+
   return (
     <header className="py-2 px-8 shadow-sm bg-[color:var(--bg-primary)] font-work-sans">
       <nav className="flex justify-between items-center font-bold">
-        <Link
-          className="text-[color:var(--text-primary)]  text-xl"
-          href={"/"}
-        >
-          <Image src="/logo.png" alt="logo" width={144} height={30} priority />
-        </Link>
-        <ul className="flex gap-4">
+        <div className="flex items-center gap-4">
+          <Link className="text-[color:var(--text-primary)] text-xl" href="/">
+            <Image src="/logo.png" alt="logo" width={144} height={30} priority />
+          </Link>
+        </div>
+        <ul className="flex gap-4 items-center">
           <li>
             <Link
-              href={"/"}
+              href="/"
               className="text-[color:var(--text-primary)] hover:text-[color:var(--text-primary-dark)]"
             >
               Home
@@ -23,7 +26,7 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              href={"/"}
+              href="/about"
               className="text-[color:var(--text-primary)] hover:text-[color:var(--text-primary-dark)]"
             >
               About
@@ -31,12 +34,13 @@ const Navbar = () => {
           </li>
           <li>
             <Link
-              href={"/"}
+              href="/contact"
               className="text-[color:var(--text-primary)] hover:text-[color:var(--text-primary-dark)]"
             >
               Contact
             </Link>
           </li>
+          <NavbarActions session={session} />
         </ul>
       </nav>
     </header>
